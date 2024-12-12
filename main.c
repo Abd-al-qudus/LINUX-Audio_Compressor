@@ -98,20 +98,24 @@ void picker(GtkWidget *widget, gpointer data)
     {
         conversion_data *conv_data;
         GtkFileChooser *chooser;
-        char *ffmpeg_buffer, *lame_buffer, *filename;
+        char *ffmpeg_buffer, *lame_buffer, *filepath, *filename;
 
         ffmpeg_buffer = malloc(sizeof(char) * 1024);
-        lame_buffer = "lame -b 16 temp.mp3 compressed.mp3";
+        lame_buffer = malloc(sizeof(char) * 1024);
         chooser = GTK_FILE_CHOOSER(dialog);
-        filename = gtk_file_chooser_get_filename(chooser);
+        filepath = gtk_file_chooser_get_filename(chooser);
 
-        g_print("File selected: %s\n", filename);
+        g_print("File selected: %s\n", filepath);
 
         strcpy(ffmpeg_buffer, "ffmpeg -y -i ");
-        strcat(ffmpeg_buffer, filename);
+        strcat(ffmpeg_buffer, filepath);
         strcat(ffmpeg_buffer, " -vn -acodec libmp3lame temp.mp3");
 
-        g_free(filename);
+        filename = strrchr(filepath, '/') + 1;
+        strcpy(lame_buffer, "lame -b 16 temp.mp3 ");
+        strcat(lame_buffer, filename);
+
+        g_free(filepath);
         gtk_widget_destroy(dialog);
 
         conv_data = malloc(sizeof(conversion_data));
@@ -139,6 +143,7 @@ void *conversion_thread(gpointer user_data) {
     free(data->ffmpeg);
 
     process_handler(data->lame);
+    free(data->lame);
 
     pc = process_handler("rm temp.mp3");
 
