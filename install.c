@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * install_dependencies_thread - install dependencies of the application
+ * install_dependencies - install dependencies of the application
  * basically ffmpeg, lame, libgtk and libglib by default
  * Return: void
  */
 
-void install_dependencies_thread() {
+void install_dependencies() {
     printf("Initiating installation process...\n");
     printf("Updating package list...\n");
 
@@ -62,12 +62,12 @@ void install_dependencies_thread() {
 
 
 /**
- * install - call the install_dependencies_thread function
- * in a new thread
+ * main - call the install_dependencies_thread function
+ * to install the required packages
  * Return: void
  */
 
-void install()
+void main(void)
 {
-    g_thread_new("install_dependencies_thread", (GThreadFunc)install_dependencies_thread, NULL);
+    install_dependencies();
 }

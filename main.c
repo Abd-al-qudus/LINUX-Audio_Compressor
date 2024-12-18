@@ -1,4 +1,20 @@
 #include "main.h"
+#include <glib.h>
+#include <gtk/gtk.h>
+
+//conversion block structure
+typedef struct {
+    char *ffmpeg;
+    char *lame;
+} conversion_data;
+
+
+//function signatures
+void gui(int argc, char **argv);
+void destroy(GtkWidget *widget, gpointer data);
+void picker(GtkWidget *widget, gpointer data);
+void *conversion_thread(gpointer user_data);
+
 
 /**
  * main - call other functions
@@ -39,21 +55,10 @@ void gui(int argc, char **argv)
     g_signal_connect(window, "destroy", G_CALLBACK(destroy), NULL);
     gtk_container_set_border_width(GTK_CONTAINER(window), 50);
 
-    // "Select files" button
-    //select_button = gtk_button_new_with_label("Select Audio");
-    //g_signal_connect(select_button, "clicked", G_CALLBACK(picker), "button");
-    //gtk_box_pack_start(GTK_BOX(box), select_button, TRUE, TRUE, 0);
-
     // "Convert Audio" button
     convert_button = gtk_button_new_with_label("Convert & Compress");
     g_signal_connect(convert_button, "clicked", G_CALLBACK(picker), NULL);
     gtk_box_pack_start(GTK_BOX(box), convert_button, TRUE, TRUE, 0);
-
-    // "Install dependencies" button
-    install_button = gtk_button_new_with_label("Install Dependencies");
-    g_signal_connect(install_button, "clicked", G_CALLBACK(install), NULL);
-    gtk_box_pack_start(GTK_BOX(box), install_button, TRUE, TRUE, 0);
-
 
     gtk_container_add(GTK_CONTAINER(window), box);
     gtk_widget_show_all(window);
@@ -76,6 +81,8 @@ void destroy(GtkWidget *widget, gpointer data)
 
 /**
  * picker - pick an audio file and extract its file path
+ * this initaites the conversion process for a new threaded
+ * schedule to allow destruction of the dialog
  * @widget: button widget triggering the dialog
  * @data: gpointer data
  * Return: void
@@ -129,12 +136,14 @@ void picker(GtkWidget *widget, gpointer data)
 
 
 /**
- * conversion_thread - schedule conversion for widget destruction
- * by creating a new thread, this eradicates blocking main
+ * conversion_thread - allows widget destruction by creating
+ * or initaiting the conversion process in a new thread,
+ * this allows non blocking I/O
  * Return: true of false
  */
 
-void *conversion_thread(gpointer user_data) {
+void *conversion_thread(gpointer user_data)
+{
     conversion_data *data;
     int pc;
 
