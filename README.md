@@ -1,4 +1,4 @@
-# Project Title: Process Handler Tool
+# LINUX Audio Converter and Compressor to MP3
 
 ## Overview
 The Linux MP3 Converter and Compressor is a lightweight and efficient C-based application designed to streamline audio conversion for Linux users. It is built with simplicity and performance in mind, making it a robust choice for both novice and advanced users.
@@ -6,7 +6,7 @@ The Linux MP3 Converter and Compressor is a lightweight and efficient C-based ap
 ## Why Choose the Process Handler Tool?
 1. **Performance**: Written in C for optimal performance, ensuring low resource usage.
 2. **Simplicity**: Easy to set up, use, and integrate with existing systems.
-3. **Community-Driven**: Fully open-source enabling contributions and customizations.
+3. **Open Source**: Fully open-source enabling contributions and customizations.
 4. **Multiple Audio-Formats input**: Supports all audio format input to convert to MP3
 5. **File Size Optimization**: The default bit rate of the compressed MP3 file is 16 bits. This enhances file size management for easy transfer
 
