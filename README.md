@@ -11,7 +11,7 @@ The Linux MP3 Converter and Compressor is a lightweight and efficient C-based ap
 5. **File Size Optimization**: The default bit rate of the compressed MP3 file is 16 bits. This enhances file size management for easy transfer
 
 ## Video Demonstration
-![Demo](https://img.youtube.com/vi/we4yRnO17kY/)
+[![Demo Video](https://img.youtube.com/vi/we4yRnO17kY/0.jpg)](https://www.youtube.com/watch?v=we4yRnO17kY)
 
 This video provides a step-by-step walkthrough of the tool’s features, installation, and usage.
 
